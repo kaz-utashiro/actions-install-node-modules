@@ -1,0 +1,48 @@
+name: install node modules
+
+inputs:
+  root:
+    required: true
+    type: string
+  cache:
+    required: false
+    type: string
+    default: yes
+  cache_gen:
+    required: false
+    type: string
+    default: v1
+
+runs:
+  using: "composite"
+  steps:
+
+    - name: node info
+      id: node-info
+      shell: bash
+      run: |
+        node -v
+        echo "::set-output name=version::$(node -v)"
+        echo "::set-output name=hashfiles::${{ inputs.root }}/**/package-lock.json"
+
+    - name: cache node_modules
+      if: inputs.cache == 'yes'
+      uses: actions/cache@v2
+      with:
+        path: ${{ inputs.root }}/*/node_modules
+        key: ${{ runner.os }}-${{ steps.node-info.outputs.version }}-${{ inputs.cache_gen }}-${{ hashFiles(steps.node-info.outputs.hashfiles) }}
+
+    - name: configure node modules
+      shell: bash
+      run: |
+        for lock in $(find ${{ inputs.root }} -name package-lock.json)
+        do
+          dir=$(dirname $lock)
+          if [ -d $dir/node_modules ]
+          then
+            echo "skip $dir"
+          else
+            echo "configure $dir"
+            (cd $dir && npm install)
+          fi
+        done
