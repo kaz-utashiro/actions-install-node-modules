@@ -9,30 +9,29 @@ runs:
   using: "composite"
   steps:
 
-    - name: node info
-      id: node-info
+    - id: info
       shell: bash
       run: |
         case "${{ inputs.cache }}" in
           yes|workflow) cache="${{ inputs.cache }}" ;;
           *) cache= ;;
         esac
-        gen="${{ input.cache_gen }}"
+        gen="${{ inputs.cache_gen }}"
         node -v
-        hashfiles="${{ hashFiles(inputs.root+'/**/package-lock.json') }}"
-        hash="$( uname -mrsv | md5sum | awk '{print $1}' )"-"$gen"-"$hashfiles"
+        hash="$( uname -mrsv | md5sum | awk '{print $1}' )"-"$gen"
         [ "$cache" == 'workflow' ] && hash=$hash-${{ github.run_id }}
         cat << END
         ::set-output name=cache::$cache
         ::set-output name=hash::$hash
+        ::set-output name=hashfiles::${{ inputs.root }}/**/package-lock.json
         END
 
     - name: cache node_modules
-      if: steps.apt.outpts.cache != ''
+      if: steps.info.outputs.cache != ''
       uses: actions/cache@v2
       with:
         path: ${{ inputs.root }}/*/node_modules
-        key: ${{ steps.node-info.outputs.hash }}
+        key: ${{ hashFiles(steps.info.outputs.hashfiles) }}-${{ steps.info.outputs.hash }}
 
     - name: configure node modules
       shell: bash

@@ -1,0 +1,39 @@
+name: test
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  initial:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./
+        with: { cache: workflow }
+      - run: node __test__/hello
+  cached:
+    needs: initial
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./
+        with: { cache: workflow }
+      - run: node __test__/hello
+  no-cache:
+    needs: initial
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./
+        with: { cache: no }
+      - run: node __test__/hello
+  cache-gen:
+    needs: initial
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./
+        with: { cache: workflow, cache_gen: v2 }
+      - run: node __test__/hello
