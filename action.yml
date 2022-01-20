@@ -2,7 +2,7 @@
 name: install node modules
 
 inputs:
-  root:      { required: true,  type: string }
+  root:      { required: false, type: string, default: . }
   cache:     { required: false, type: string, default: yes }
   cache_gen: { required: false, type: string, default: v1 }
 
@@ -38,7 +38,6 @@ runs:
       shell: bash
       run: |
         root="${{ inputs.root }}"
-        : ${root:=.}
         for lock in $(find $root -name package-lock.json)
         do
           dir=$(dirname $lock)
