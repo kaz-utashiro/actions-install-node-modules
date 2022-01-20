@@ -1,3 +1,4 @@
+
 name: install node modules
 
 inputs:
@@ -36,7 +37,9 @@ runs:
     - name: configure node modules
       shell: bash
       run: |
-        for lock in $(find ${{ inputs.root }} -name package-lock.json)
+        root="${{ inputs.root }}"
+        : ${root:=.}
+        for lock in $(find $root -name package-lock.json)
         do
           dir=$(dirname $lock)
           if [ -d $dir/node_modules ]

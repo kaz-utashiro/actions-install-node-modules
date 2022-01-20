@@ -11,7 +11,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: ./
-        with: { cache: workflow }
+        with:
+          cache: workflow
+          root: __test__
       - run: node __test__/hello
   cached:
     needs: initial
@@ -19,7 +21,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: ./
-        with: { cache: workflow }
+        with:
+          cache: workflow
+          root: __test__
       - run: node __test__/hello
   no-cache:
     needs: initial
@@ -27,7 +31,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: ./
-        with: { cache: no }
+        with:
+          cache: no
+          root: __test__
       - run: node __test__/hello
   cache-gen:
     needs: cached
@@ -35,5 +41,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: ./
-        with: { cache: workflow, cache_gen: v2 }
+        with:
+          cache: workflow
+          root: __test__
+          cache_gen: v2
       - run: node __test__/hello
