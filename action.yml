@@ -19,12 +19,13 @@ runs:
         esac
         gen="${{ inputs.cache_gen }}"
         node -v
-        hash="$( (uname -mrsv; node -v) | md5sum | awk '{print $1}' )"-"$gen"
+        env_hash="$( (uname -mrsv; node -v) | md5sum | awk '{print $1}' )"-"$gen"
+        file_hash="${{ hashFiles(format('{0}/**/package-lock.json', inputs.root)) }}"
+        hash="$file_hash-$env_hash"
         [ "$cache" == 'workflow' ] && hash=$hash-${{ github.run_id }}
         cat << END
         ::set-output name=cache::$cache
         ::set-output name=hash::$hash
-        ::set-output name=hashfiles::${{ inputs.root }}/**/package-lock.json
         END
 
     - name: cache node_modules
@@ -32,7 +33,7 @@ runs:
       uses: actions/cache@v2
       with:
         path: ${{ inputs.root }}/*/node_modules
-        key: ${{ hashFiles(steps.info.outputs.hashfiles) }}-${{ steps.info.outputs.hash }}
+        key: ${{ steps.info.outputs.hash }}
 
     - name: configure node modules
       shell: bash
