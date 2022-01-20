@@ -1,4 +1,3 @@
-
 name: install node modules
 
 inputs:
@@ -6,8 +5,12 @@ inputs:
   cache:     { required: false, type: string, default: yes }
   cache_gen: { required: false, type: string, default: v1 }
 
+outputs:
+  cache-hit:
+    value: ${{ steps.cache.outputs.cache-hit }}
+
 runs:
-  using: "composite"
+  using: composite
   steps:
 
     - id: info
@@ -28,7 +31,7 @@ runs:
         ::set-output name=hash::$hash
         END
 
-    - name: cache node_modules
+    - id: cache
       if: steps.info.outputs.cache != ''
       uses: actions/cache@v2
       with:

@@ -9,7 +9,9 @@ changed, installed modules are extracted from the cached archive.
 This action assumes all package has `package-lock.json` file.
 Supporting different type package manager is a future issue.
 
-## usage
+Output is same as [`@actions/cache`](https://github.com/actions/cache).
+
+## Usage
 
 ```
 # inputs:
