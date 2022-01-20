@@ -26,7 +26,7 @@ jobs:
           root: __test__
       - run: node __test__/hello
   no-root:
-    needs: initial
+    needs: cached
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
