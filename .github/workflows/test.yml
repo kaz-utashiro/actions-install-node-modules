@@ -30,7 +30,7 @@ jobs:
         with: { cache: no }
       - run: node __test__/hello
   cache-gen:
-    needs: initial
+    needs: cached
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
