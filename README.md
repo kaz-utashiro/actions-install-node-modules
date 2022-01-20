@@ -1,10 +1,13 @@
 # actions-install-node-modules
 
 This Github action searches `package-lock.json` file under the
-specified root directory, install modules and cache them for later
-use.  When executed next time with same package configurations, and
-any other environment are not changed, installed modules are extracted
-from the cached archive.
+specified root directory, install modules by `npm` and cache all
+`node_modules` directory for later use.  When executed next time with
+same package configurations, and any other environment are not
+changed, installed modules are extracted from the cached archive.
+
+This action assumes all package has `package-lock.json` file.
+Supporting different type package manager is a future issue.
 
 ## usage
 
