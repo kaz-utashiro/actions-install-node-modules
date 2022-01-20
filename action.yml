@@ -19,10 +19,10 @@ runs:
         esac
         gen="${{ inputs.cache_gen }}"
         node -v
-        env_hash="$( (uname -mrsv; node -v) | md5sum | awk '{print $1}' )"-"$gen"
+        env_hash="$( (uname -mrsv; node -v) | md5sum | awk '{print $1}' )"
         file_hash="${{ hashFiles(format('{0}/**/package-lock.json', inputs.root)) }}"
-        hash="$file_hash-$env_hash"
-        [ "$cache" == 'workflow' ] && hash=$hash-${{ github.run_id }}
+        hash="$file_hash-$gen-$env_hash"
+        [ "$cache" == 'workflow' ] && hash="$hash-${{ github.run_id }}"
         cat << END
         ::set-output name=cache::$cache
         ::set-output name=hash::$hash
