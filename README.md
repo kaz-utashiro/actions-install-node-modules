@@ -17,7 +17,7 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
 # inputs:
 #   root:      { required: false, type: string, default: . }
 #   cache:     { required: false, type: string, default: yes }
-#   cache_gen: { required: false, type: string, default: v1 }
+#   cache-gen: { required: false, type: string, default: v1 }
 
 - uses: office-tecoli/actions-use-perl-modules@v0
   with:
@@ -39,6 +39,6 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
     # number produces different cache key.
     #
     # Default: v1
-    cache_gen: v1
+    cache-gen: v1
 
 ```

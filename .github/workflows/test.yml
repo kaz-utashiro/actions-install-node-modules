@@ -64,6 +64,6 @@ jobs:
         with:
           cache: workflow
           root: __test__
-          cache_gen: v2
+          cache-gen: v2
       - run: node __test__/hello
       - run: test "${{ steps.action.outputs.cache-hit }}" != true
