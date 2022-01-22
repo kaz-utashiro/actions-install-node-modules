@@ -42,3 +42,11 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
     cache-gen: v1
 
 ```
+
+## Example
+
+```
+- uses: office-tecoli/actions-install-node-modules@v0
+  with:
+    root: ./Script/lib/node
+```

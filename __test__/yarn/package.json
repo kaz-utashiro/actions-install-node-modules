@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "debug": "^4.3.3"
+  },
+  "name": "yarn",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT"
+}

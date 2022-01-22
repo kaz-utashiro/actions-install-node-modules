@@ -42,14 +42,20 @@ runs:
       shell: bash
       run: |
         root="${{ inputs.root }}"
-        for lock in $(find $root -name package-lock.json)
+        for path in $(find $root -name package-lock.json -o -name yarn.lock)
         do
-          dir=$(dirname $lock)
+          lock=$(basename $path)
+          dir=$(dirname $path)
           if [ -d $dir/node_modules ]
           then
             echo "skip $dir"
           else
             echo "configure $dir"
-            (cd $dir && npm install)
+            case $lock in
+              package-lock.json)
+                (cd $dir && npm install) ;;
+              yarn.lock)
+                (cd $dir && yarn --check-files --frozen-lockfile --non-interactive) ;;
+            esac
           fi
         done
