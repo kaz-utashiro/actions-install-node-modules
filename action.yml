@@ -18,7 +18,7 @@ runs:
       run: |
         case "${{ inputs.cache }}" in
           yes|workflow) cache="${{ inputs.cache }}" ;;
-          *) cache= ;;
+          *)            cache=no ;;
         esac
         gen="${{ inputs.cache-gen }}"
         node -v
@@ -32,13 +32,13 @@ runs:
         END
 
     - id: cache
-      if: steps.info.outputs.cache != ''
+      if: steps.info.outputs.cache != 'no'
       uses: actions/cache@v2
       with:
         path: ${{ inputs.root }}/*/node_modules
         key: ${{ steps.info.outputs.hash }}
 
-    - name: configure node modules
+    - id: install
       shell: bash
       run: |
         root="${{ inputs.root }}"
