@@ -1,5 +1,7 @@
 # actions-install-node-modules
 
+![actions-install-node-modules](https://github.com/office-tecoli/actions-install-node-modules/actions/workflows/test.yml/badge.svg)
+
 This GitHub action searches lock files under the specified root
 directory, install modules and cache all `node_modules` directory for
 later use.  When executed next time with same package configurations,
