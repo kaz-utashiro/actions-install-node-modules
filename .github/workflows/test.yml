@@ -17,7 +17,7 @@ jobs:
         with:
           cache: workflow
           root: __test__
-      - run: for dir in __test__/*; do node $dir; done
+      - run: for dir in __test__/*.d ; do node $dir ; done
       - run: test "${{ steps.action.outputs.cache-hit }}" != true
   cached:
     needs: initial
@@ -29,7 +29,7 @@ jobs:
         with:
           cache: workflow
           root: __test__
-      - run: for dir in __test__/*; do node $dir; done
+      - run: for dir in __test__/*.d ; do node $dir ; done
       - run: test "${{ steps.action.outputs.cache-hit }}" == true
   no-root:
     needs: cached
@@ -40,7 +40,7 @@ jobs:
         id: action
         with:
           cache: workflow
-      - run: for dir in __test__/*; do node $dir; done
+      - run: for dir in __test__/*.d ; do node $dir ; done
       - run: echo "cache-hit=\"${{ steps.action.outputs.cache-hit }}\""
   no-cache:
     needs: initial
@@ -52,7 +52,7 @@ jobs:
         with:
           cache: no
           root: __test__
-      - run: for dir in __test__/*; do node $dir; done
+      - run: for dir in __test__/*.d ; do node $dir ; done
       - run: test "${{ steps.action.outputs.cache-hit }}" != true
   cache-gen:
     needs: initial
@@ -65,5 +65,5 @@ jobs:
           cache: workflow
           root: __test__
           cache-gen: v2
-      - run: for dir in __test__/*; do node $dir; done
+      - run: for dir in __test__/*.d ; do node $dir ; done
       - run: test "${{ steps.action.outputs.cache-hit }}" != true
