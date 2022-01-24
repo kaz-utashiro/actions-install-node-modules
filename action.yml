@@ -42,7 +42,11 @@ runs:
       shell: bash
       run: |
         root="${{ inputs.root }}"
-        for path in $(find $root \( -name node_modules -prune \) -o -name package-lock.json -o -name yarn.lock)
+        for path in $( \
+          find $root \
+            \( -name node_modules -prune \) -o \
+            \( \( -name package-lock.json -o -name yarn.lock \) -a -print \) \
+        )
         do
           lock=$(basename $path)
           dir=$(dirname $path)
