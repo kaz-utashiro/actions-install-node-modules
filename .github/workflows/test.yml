@@ -37,8 +37,7 @@ jobs:
       - run: test "${{ steps.action.outputs.cache-hit }}" == true
   no-root:
     needs: cached
-    strategy: { matrix: { os: [ ubuntu-latest, macos-latest ] } }
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: ./
@@ -49,8 +48,7 @@ jobs:
       - run: echo "cache-hit=\"${{ steps.action.outputs.cache-hit }}\""
   no-cache:
     needs: initial
-    strategy: { matrix: { os: [ ubuntu-latest, macos-latest ] } }
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: ./
@@ -62,8 +60,7 @@ jobs:
       - run: test "${{ steps.action.outputs.cache-hit }}" != true
   cache-gen:
     needs: initial
-    strategy: { matrix: { os: [ ubuntu-latest, macos-latest ] } }
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: ./
