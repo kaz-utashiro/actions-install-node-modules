@@ -10,7 +10,7 @@ extracted from the cached archive.
 
 At this time, installation is done by next commands.
 
-```
+```yaml
 package-lock.json:
     npm install
 yarn.lock:
@@ -21,7 +21,7 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
 
 ## Usage
 
-```
+```yaml
 # inputs:
 #   root:      { required: false, type: string, default: . }
 #   cache:     { required: false, type: string, default: yes }
@@ -53,7 +53,7 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
 
 ## Example
 
-```
+```yaml
 - uses: office-tecoli/actions-install-node-modules@v0
   with:
     root: ./Script/lib/node
