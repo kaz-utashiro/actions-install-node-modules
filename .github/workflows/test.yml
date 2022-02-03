@@ -8,8 +8,10 @@ on:
   workflow_dispatch:
 
 jobs:
+
   initial:
-    runs-on: ubuntu-latest
+    strategy: { matrix: { os: [ ubuntu-latest, macos-latest ] } }
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
       - uses: ./
@@ -19,20 +21,11 @@ jobs:
           root: __test__
       - run: (cd __test__; . run.sh)
       - run: test "${{ steps.action.outputs.cache-hit }}" != true
-  macos:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: ./
-        id: action
-        with:
-          cache: workflow
-          root: __test__
-      - run: (cd __test__; . run.sh)
-      - run: test "${{ steps.action.outputs.cache-hit }}" != true
+
   cached:
     needs: initial
-    runs-on: ubuntu-latest
+    strategy: { matrix: { os: [ ubuntu-latest, macos-latest ] } }
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
       - uses: ./
@@ -44,7 +37,8 @@ jobs:
       - run: test "${{ steps.action.outputs.cache-hit }}" == true
   no-root:
     needs: cached
-    runs-on: ubuntu-latest
+    strategy: { matrix: { os: [ ubuntu-latest, macos-latest ] } }
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
       - uses: ./
@@ -55,7 +49,8 @@ jobs:
       - run: echo "cache-hit=\"${{ steps.action.outputs.cache-hit }}\""
   no-cache:
     needs: initial
-    runs-on: ubuntu-latest
+    strategy: { matrix: { os: [ ubuntu-latest, macos-latest ] } }
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
       - uses: ./
@@ -67,7 +62,8 @@ jobs:
       - run: test "${{ steps.action.outputs.cache-hit }}" != true
   cache-gen:
     needs: initial
-    runs-on: ubuntu-latest
+    strategy: { matrix: { os: [ ubuntu-latest, macos-latest ] } }
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
       - uses: ./
