@@ -13,9 +13,10 @@ runs:
   using: composite
   steps:
 
-    - id: info
+    - id: setup
       shell: bash
       run: |
+        : setup
         case "${{ inputs.cache }}" in
           yes|workflow) cache="${{ inputs.cache }}" ;;
           *)            cache=no ;;
@@ -32,15 +33,16 @@ runs:
         END
 
     - id: cache
-      if: steps.info.outputs.cache != 'no'
+      if: steps.setup.outputs.cache != 'no'
       uses: actions/cache@v2
       with:
         path: ${{ inputs.root }}/*/node_modules
-        key: ${{ steps.info.outputs.hash }}
+        key: ${{ steps.setup.outputs.hash }}
 
     - id: install
       shell: bash
       run: |
+        : install
         root="${{ inputs.root }}"
         for path in $( \
           find $root \
