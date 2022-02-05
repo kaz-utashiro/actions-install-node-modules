@@ -25,11 +25,11 @@ runs:
         node -v
         env_hash="$( (uname -mrsv; node -v) | (md5sum||md5) | awk '{print $1}' )"
         file_hash="${{ hashFiles(format('{0}/**/package-lock.json', inputs.root), format('{0}/**/yarn.lock', inputs.root)) }}"
-        hash="$file_hash-$gen-$env_hash"
+        key="$file_hash-$env_hash${gen:+-$gen}"
         [ "$cache" == 'workflow' ] && key="$key-${{ github.run_id }}-${{ github.run_attempt }}"
         cat << END
         ::set-output name=cache::$cache
-        ::set-output name=hash::$hash
+        ::set-output name=key::$key
         END
 
     - id: cache
@@ -37,7 +37,7 @@ runs:
       uses: actions/cache@v2
       with:
         path: ${{ inputs.root }}/*/node_modules
-        key: ${{ steps.setup.outputs.hash }}
+        key: ${{ steps.setup.outputs.key }}
 
     - id: install
       shell: bash
