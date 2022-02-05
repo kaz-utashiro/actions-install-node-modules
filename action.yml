@@ -16,7 +16,7 @@ runs:
     - id: setup
       shell: bash
       run: |
-        : setup
+        : setup ${{ github.repository }}
         case "${{ inputs.cache }}" in
           yes|workflow) cache="${{ inputs.cache }}" ;;
           *)            cache=no ;;
@@ -26,7 +26,7 @@ runs:
         env_hash="$( (uname -mrsv; node -v) | (md5sum||md5) | awk '{print $1}' )"
         file_hash="${{ hashFiles(format('{0}/**/package-lock.json', inputs.root), format('{0}/**/yarn.lock', inputs.root)) }}"
         hash="$file_hash-$gen-$env_hash"
-        [ "$cache" == 'workflow' ] && hash="$hash-${{ github.run_id }}"
+        [ "$cache" == 'workflow' ] && key="$key-${{ github.run_id }}-${{ github.run_attempt }}"
         cat << END
         ::set-output name=cache::$cache
         ::set-output name=hash::$hash
