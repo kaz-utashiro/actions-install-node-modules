@@ -4,6 +4,7 @@ inputs:
   root:      { required: false, type: string, default: . }
   cache:     { required: false, type: string, default: yes }
   cache-gen: { required: false, type: string, default: v1 }
+  key:       { required: false, type: string }
 
 outputs:
   cache-hit:
@@ -23,9 +24,10 @@ runs:
         esac
         gen="${{ inputs.cache-gen }}"
         node -v
-        env_hash="$( (uname -mrsv; node -v) | (md5sum||md5) | awk '{print $1}' )"
         file_hash="${{ hashFiles(format('{0}/**/package-lock.json', inputs.root), format('{0}/**/yarn.lock', inputs.root)) }}"
-        key="$file_hash-$env_hash${gen:+-$gen}"
+        given_key="${{ inputs.key }}"
+        version_key="$( (uname -mrsv; node -v) | (md5sum||md5) | awk '{print $1}' )"
+        key="${given_key:+$given_key-}${version_key}-${file_hash}${gen:+-$gen}"
         [ "$cache" == 'workflow' ] && key="$key-${{ github.run_id }}-${{ github.run_attempt }}"
         cat << END
         ::set-output name=cache::$cache
