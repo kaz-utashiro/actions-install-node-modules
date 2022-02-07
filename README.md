@@ -25,7 +25,7 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
 # inputs:
 #   root:  { required: false, type: string, default: . }
 #   cache: { required: false, type: string, default: yes }
-#   key:   { required: false, type: string, default: v1 }
+#   key:   { required: false, type: string }
 
 - uses: office-tecoli/actions-use-perl-modules@v0
   with:
