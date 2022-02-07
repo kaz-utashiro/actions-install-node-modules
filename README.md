@@ -33,12 +33,12 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
     # root directory
     root: .
 
-    # Cache strategey
+    # Cache strategy
     #
     # yes:      activate cache
+    # no:       no cache
     # workflow: effective within same workflow (mainly for test)
     #
-    # anything else means 'no'
     cache: yes
 
     # Additional cache key
