@@ -3,7 +3,6 @@ name: install node modules
 inputs:
   root:      { required: false, type: string, default: . }
   cache:     { required: false, type: string, default: yes }
-  cache-gen: { required: false, type: string, default: v1 }
   key:       { required: false, type: string }
 
 outputs:
@@ -22,12 +21,11 @@ runs:
           yes|workflow) cache="${{ inputs.cache }}" ;;
           *)            cache=no ;;
         esac
-        gen="${{ inputs.cache-gen }}"
         node -v
         file_hash="${{ hashFiles(format('{0}/**/package-lock.json', inputs.root), format('{0}/**/yarn.lock', inputs.root)) }}"
         given_key="${{ inputs.key }}"
         version_key="$( (uname -mrsv; node -v) | (md5sum||md5) | awk '{print $1}' )"
-        key="${given_key:+$given_key-}${version_key}-${file_hash}${gen:+-$gen}"
+        key="${given_key:+$given_key-}${version_key}-${file_hash}"
         [ "$cache" == 'workflow' ] && key="$key-${{ github.run_id }}-${{ github.run_attempt }}"
         cat << END
         ::set-output name=cache::$cache
