@@ -1,6 +1,6 @@
 # actions-install-node-modules
 
-![actions-install-node-modules](https://github.com/office-tecoli/actions-install-node-modules/actions/workflows/test.yml/badge.svg)
+![actions-install-node-modules](https://github.com/tecoli-com/actions-install-node-modules/actions/workflows/test.yml/badge.svg)
 
 This GitHub action searches lock files under the specified root
 directory, install modules and cache all `node_modules` directory for
@@ -27,7 +27,7 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
 #   cache: { required: false, type: string, default: yes }
 #   key:   { required: false, type: string }
 
-- uses: office-tecoli/actions-use-perl-modules@v0
+- uses: tecoli-com/actions-use-perl-modules@v0
   with:
 
     # root directory
@@ -48,11 +48,11 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
 ## Example
 
 ```yaml
-- uses: office-tecoli/actions-install-node-modules@v0
+- uses: tecoli-com/actions-install-node-modules@v0
   with:
     root: ./Script/lib/node
 ```
 
 ## See Also
 
-### [office-tecoli/actions](https://github.com/office-tecoli/actions)
+### [tecoli-com/actions](https://github.com/tecoli-com/actions)
