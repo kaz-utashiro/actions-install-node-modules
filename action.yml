@@ -1,4 +1,9 @@
 name: install node modules
+description: 'GitHub Action to install and cache Node.js tools'
+author: 'Office TECOLI, LLC'
+branding: 
+  color: 'orange'
+  icon: 'plus-square'
 
 inputs:
   root:  { required: false, type: string, default: . }
