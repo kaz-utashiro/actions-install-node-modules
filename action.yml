@@ -32,9 +32,9 @@ runs:
         version_key="$( (uname -mrsv; node -v) | (md5sum||md5) | awk '{print $1}' )"
         key="${given_key:+$given_key-}${version_key}-${file_hash}"
         [ "$cache" == 'workflow' ] && key="$key-${{ github.run_id }}-${{ github.run_attempt }}"
-        cat << END
-        ::set-output name=cache::$cache
-        ::set-output name=key::$key
+        cat << END >> $GITHUB_OUTPUT
+        cache=$cache
+        key=$key
         END
 
     - id: cache
