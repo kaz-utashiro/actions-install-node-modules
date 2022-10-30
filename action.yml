@@ -39,7 +39,7 @@ runs:
 
     - id: cache
       if: steps.setup.outputs.cache != 'no'
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: ${{ inputs.root }}/**/node_modules
         key: ${{ steps.setup.outputs.key }}
