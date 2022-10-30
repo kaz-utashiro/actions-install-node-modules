@@ -1,6 +1,6 @@
 # actions-install-node-modules
 
-![actions-install-node-modules](https://github.com/tecoli-com/actions-install-node-modules/actions/workflows/test.yml/badge.svg)
+![actions-install-node-modules](https://github.com/tecolicom/actions-install-node-modules/actions/workflows/test.yml/badge.svg)
 
 This GitHub action searches lock files under the specified root
 directory, install modules and cache all `node_modules` directory for
@@ -55,4 +55,4 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
 
 ## See Also
 
-### [tecoli-com/actions](https://github.com/tecoli-com/actions)
+### [tecolicom/actions](https://github.com/tecolicom/actions)
