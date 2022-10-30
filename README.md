@@ -27,7 +27,7 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
 #   cache: { required: false, type: string, default: yes }
 #   key:   { required: false, type: string }
 
-- uses: tecoli-com/actions-use-perl-modules@v0
+- uses: tecolicom/actions-use-perl-modules@v1
   with:
 
     # root directory
@@ -48,7 +48,7 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
 ## Example
 
 ```yaml
-- uses: tecoli-com/actions-install-node-modules@v0
+- uses: tecolicom/actions-install-node-modules@v1
   with:
     root: ./Script/lib/node
 ```
