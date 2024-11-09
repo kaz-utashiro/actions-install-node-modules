@@ -31,7 +31,8 @@ runs:
         given_key="${{ inputs.key }}"
         version_key="$( (uname -mrsv; node -v) | (md5sum||md5) | awk '{print $1}' )"
         key="${given_key:+$given_key-}${version_key}-${file_hash}"
-        [ "$cache" == 'workflow' ] && key="$key-${{ github.run_id }}-${{ github.run_attempt }}"
+        [ "$cache" == 'workflow' ] && \
+            key+="-${{ github.run_id }}-${{ github.run_attempt }}"
         path=$(npm config get cache)
         sed 's/^ *//' << END >> $GITHUB_OUTPUT
             cache=$cache
